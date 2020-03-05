@@ -12,14 +12,16 @@ import com.irrigation.waterordering.validator.ValueOfEnum;
 
 public class WaterOrderDto {
 	
+	private Long id;
+	
 	@NotEmpty(message="Please provide farm name.")
 	private String farmName;
 	
-	@Future
+	@Future(message="startDateTime must be a future date.")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime startDateTime;	
 	
-	@NotEmpty(message="Please provide duration")
+	@NotEmpty(message="Please provide duration in format HH:MM:SS")
 	@JsonFormat(pattern="HH:MM:SS")
 	private String duration;
 	
@@ -59,12 +61,24 @@ public class WaterOrderDto {
 	public void setOrderStatusDescription(String orderStatusDescription) {
 		this.orderStatusDescription = orderStatusDescription;
 	}
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {
-		return "WaterOrderDto [farmName=" + farmName + ", startDateTime=" + startDateTime + ", duration=" + duration
-				+ ", orderStatusDescription=" + orderStatusDescription + "]";
+		return "WaterOrderDto [id=" + id + ", farmName=" + farmName + ", startDateTime=" + startDateTime + ", duration="
+				+ duration + ", orderStatusDescription=" + orderStatusDescription + "]";
 	}
+
+	
 
 	
 	

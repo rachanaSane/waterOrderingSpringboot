@@ -12,11 +12,21 @@
 
 	<int:channel id="fromdb"/>
 	<int:service-activator input-channel="fromdb"
-		ref="jdbcMessageHandler" />
+		ref="waterOrderStartPoller" />
 	<int-jdbc:inbound-channel-adapter
 		channel="fromdb" data-source="dataSource"
-		query="SELECT * FROM WATER_ORDER WHERE ORDER_STATUS = 'DELIVERED' "
-		update="UPDATE WATER_ORDER SET ORDER_STATUS ='REQUESTED'" >
-		<int:poller fixed-delay="4000" />
+		query="SELECT * FROM WATER_ORDER where day(START_DATE_TIME) = day(current_timestamp) and hour(START_DATE_TIME) = hour(current_timestamp)  and minute(START_DATE_TIME) = minute(current_timestamp) AND ORDER_STATUS ='REQUESTED' "
+		update="UPDATE WATER_ORDER SET ORDER_STATUS ='INPROGRESS'" >
+		<int:poller fixed-delay="10" />
+	</int-jdbc:inbound-channel-adapter>
+	
+	<int:channel id="forDelivery"/>
+	<int:service-activator input-channel="forDelivery"
+		ref="waterOrderDeliveredPoller" />
+	<int-jdbc:inbound-channel-adapter
+		channel="forDelivery" data-source="dataSource"
+		query="SELECT * FROM WATER_ORDER WHERE day(END_DATE_TIME) = day(current_timestamp) and hour(END_DATE_TIME) = hour(current_timestamp)  and minute(END_DATE_TIME) = minute(current_timestamp) AND ORDER_STATUS ='INPROGRESS' "
+		update="UPDATE WATER_ORDER SET ORDER_STATUS ='DELIVERED'" >
+		<int:poller fixed-delay="1000" />
 	</int-jdbc:inbound-channel-adapter>
 </beans>

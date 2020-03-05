@@ -87,6 +87,7 @@ public class WaterOrderServiceImpl implements WaterOrderService {
 	private WaterOrderDto convertToDto(WaterOrder waterOrder) {
 		
 		WaterOrderDto waterOrderDto = new WaterOrderDto();
+		waterOrderDto.setId(waterOrder.getId());
 		waterOrderDto.setFarmName(waterOrder.getFarmName());
 		waterOrderDto.setStartDateTime(waterOrder.getStartDateTime());
 		waterOrderDto.setDuration(convertToDuration(waterOrder.getDuration()));

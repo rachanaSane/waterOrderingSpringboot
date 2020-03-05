@@ -29,9 +29,13 @@ public class CustomErrorHandler extends ResponseEntityExceptionHandler {
 	@ResponseBody
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ErrorResponse generationExceptionHandler(Exception e){
-	  
-	    return new ErrorResponse(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<ErrorResponse> generationExceptionHandler(Exception e){
+		
+		 ErrorResponse errors = new ErrorResponse();
+	        errors.setError(e.getMessage());
+	        errors.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);	  
+	    
 	}
 	
 	/*@ExceptionHandler(WaterOrderNotFoundException.class)
@@ -64,7 +68,7 @@ public class CustomErrorHandler extends ResponseEntityExceptionHandler {
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		 Map<String, Object> body = new LinkedHashMap<>();
-	        body.put("timestamp", new Date());
+	      
 	        body.put("status", status.value());
 
 	        //Get all errors
