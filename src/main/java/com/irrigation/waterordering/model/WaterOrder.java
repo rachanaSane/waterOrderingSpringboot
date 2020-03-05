@@ -1,6 +1,8 @@
 package com.irrigation.waterordering.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,16 +19,19 @@ public class WaterOrder {
 	@GeneratedValue
 	private Long id;
 	
+	private String farmName;
+	
 	@Future
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime startDateTime;	
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	
 	private LocalDateTime endDateTime;
+	
 	
 	private long duration;
 	
-	@ValueOfEnum(enumClass = OrderStatus.class , message="valid value should be out of REQUESTED| INPROGRESS| DELIVERED |CANCELLED")
+	//@ValueOfEnum(enumClass = OrderStatus.class , message="valid value should be out of REQUESTED| INPROGRESS| DELIVERED |CANCELLED")
 	private String orderStatus;
 
 	public Long getId() {
@@ -35,6 +40,16 @@ public class WaterOrder {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+
+	public String getFarmName() {
+		return farmName;
+	}
+
+	public void setFarmName(String farmName) {
+		this.farmName = farmName;
 	}
 
 	public LocalDateTime getStartDateTime() {
@@ -45,14 +60,7 @@ public class WaterOrder {
 		this.startDateTime = startDateTime;
 	}
 
-	public LocalDateTime getEndDateTime() {
-		return endDateTime;
-	}
-
-	public void setEndDateTime(LocalDateTime endDateTime) {
-		this.endDateTime = endDateTime;
-	}
-
+	
 	public long getDuration() {
 		return duration;
 	}
@@ -94,11 +102,18 @@ public class WaterOrder {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "WaterOrder [id=" + id + ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime
-				+ ", duration=" + duration + ", orderStatus=" + orderStatus + "]";
+	public LocalDateTime getEndDateTime() {
+		return endDateTime;
 	}
+
+	public void setEndDateTime(LocalDateTime endDateTime) {
+		this.endDateTime = endDateTime;
+	}
+
+	
+
+	
+	
 	
 	
 	

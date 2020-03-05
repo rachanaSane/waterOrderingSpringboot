@@ -28,6 +28,8 @@ import com.irrigation.waterordering.error.WaterOrderException;
 import com.irrigation.waterordering.error.WaterOrderNotFoundException;
 import com.irrigation.waterordering.model.OrderStatus;
 import com.irrigation.waterordering.model.WaterOrder;
+import com.irrigation.waterordering.service.WaterOrderService;
+import com.irrigation.waterordering.view.WaterOrderDto;
 
 
 
@@ -41,21 +43,27 @@ public class WaterOrderResource {
 	@Autowired
 	private WaterOrderRepository waterOrderRepository;
 	
+	@Autowired
+	private WaterOrderService waterOrderService;
+	
 	@GetMapping("/water/orders")
-	public List<WaterOrder> getWaterOder() {	
+	public List<WaterOrderDto> getWaterOder() {	
 		LOGGER.info("Get all the water orders for the user.");
-		return waterOrderRepository.findAll();
+		//return waterOrderRepository.findAll();
+		return waterOrderService.findAllOrders();
 	}
 	
 	@GetMapping("/water/order/{orderId}")
-	public WaterOrder getWaterOder(@PathVariable long orderId) {		
+	public WaterOrderDto getWaterOder(@PathVariable long orderId) {		
 		LOGGER.info("Get the water orders for id :"+orderId);
-		return waterOrderRepository.findById(orderId).map(x -> {
+		
+		return waterOrderService.getWaterOder(orderId);
+		/*return waterOrderRepository.findById(orderId).map(x -> {
 			OrderStatus status =OrderStatus.valueOf(x.getOrderStatus());
 			x.setOrderStatus(status.getDescription());
 			return x;
 		})
-				.orElseThrow(() -> new WaterOrderNotFoundException(orderId));
+				.orElseThrow(() -> new WaterOrderNotFoundException(orderId));*/
 		
 		
 	}
@@ -64,9 +72,10 @@ public class WaterOrderResource {
 	
 	 // update author only
     @PutMapping("/water/order/{orderId}")
-    WaterOrder cancelWaterOrder(@PathVariable Long orderId) {
+    WaterOrderDto cancelWaterOrder(@PathVariable Long orderId) {
+    	return waterOrderService.cancelWaterOrder(orderId);
 
-        return waterOrderRepository.findById(orderId)
+       /* return waterOrderRepository.findById(orderId)
                 .map(x -> {
 
                 	if(OrderStatus.DELIVERED.toString().equals(x.getOrderStatus())) {
@@ -80,19 +89,19 @@ public class WaterOrderResource {
                 })
                 .orElseGet(() -> {
                     throw new WaterOrderNotFoundException(orderId);
-                });
+                });*/
 
     }
 	
 	
 		
 	@PostMapping("/water/orders")
-	public WaterOrder createWaterOder(@Valid @RequestBody WaterOrder waterOrder){
+	public WaterOrderDto createWaterOder(@Valid @RequestBody WaterOrderDto waterOrderDto){
 		
 		LOGGER.info("Create water order");
-		return waterOrderRepository.save(waterOrder);
+		return waterOrderService.createWaterOder(waterOrderDto); 
 		
-		
+			
 	}
 
 }

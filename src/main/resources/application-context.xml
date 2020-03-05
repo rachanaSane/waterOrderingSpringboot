@@ -15,8 +15,8 @@
 		ref="jdbcMessageHandler" />
 	<int-jdbc:inbound-channel-adapter
 		channel="fromdb" data-source="dataSource"
-		query="SELECT * FROM WATER_ORDER WHERE ORDER_STATUS = 'REQUESTED' "
-		update="UPDATE WATER_ORDER SET ORDER_STATUS ='DELIVERED'" >
+		query="SELECT * FROM WATER_ORDER WHERE ORDER_STATUS = 'DELIVERED' "
+		update="UPDATE WATER_ORDER SET ORDER_STATUS ='REQUESTED'" >
 		<int:poller fixed-delay="4000" />
 	</int-jdbc:inbound-channel-adapter>
 </beans>
