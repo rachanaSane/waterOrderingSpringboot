@@ -26,6 +26,22 @@ public class WaterOrderDto {
 	private String duration;
 	
 	private String orderStatusDescription;
+	
+	public WaterOrderDto() {
+		
+	}
+
+	public WaterOrderDto(Long id, @NotEmpty(message = "Please provide farm name.") String farmName,
+			@Future(message = "startDateTime must be a future date.") LocalDateTime startDateTime,
+			@NotEmpty(message = "Please provide duration in format HH:MM:SS") String duration,
+			String orderStatusDescription) {
+		super();
+		this.id = id;
+		this.farmName = farmName;
+		this.startDateTime = startDateTime;
+		this.duration = duration;
+		this.orderStatusDescription = orderStatusDescription;
+	}
 
 	public String getFarmName() {
 		return farmName;
