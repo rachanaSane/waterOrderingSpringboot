@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -34,16 +36,20 @@ import com.irrigation.waterordering.model.WaterOrder;
 @RestController
 public class WaterOrderResource {
 	
+	private static final Logger LOGGER=LoggerFactory.getLogger(WaterOrderResource.class);
+	
 	@Autowired
 	private WaterOrderRepository waterOrderRepository;
 	
 	@GetMapping("/water/orders")
-	public List<WaterOrder> getWaterOder() {		
+	public List<WaterOrder> getWaterOder() {	
+		LOGGER.info("Get all the water orders for the user.");
 		return waterOrderRepository.findAll();
 	}
 	
 	@GetMapping("/water/order/{orderId}")
 	public WaterOrder getWaterOder(@PathVariable long orderId) {		
+		LOGGER.info("Get the water orders for id :"+orderId);
 		return waterOrderRepository.findById(orderId).map(x -> {
 			OrderStatus status =OrderStatus.valueOf(x.getOrderStatus());
 			x.setOrderStatus(status.getDescription());
@@ -54,21 +60,7 @@ public class WaterOrderResource {
 		
 	}
 	
-	/*@DeleteMapping("/water/order/{orderId}")
-	public ResponseEntity<Void> deleteTodo(@PathVariable long orderId){
-		if(waterOrderRepository.findById(orderId).isPresent()) {
-			WaterOrder waterOrder = waterOrderRepository.findById(orderId).get();
-			if(waterOrder.getOrderStatus().equals(OrderStatus.DELIVERED.toString())) {
-				throw new WaterOrderException("Order is already delivered");
-			}else {
-				waterOrderRepository.deleteById(orderId);
-			}
-		}	
-		
-		
-		return ResponseEntity.notFound().build();
-		
-	}*/
+	
 	
 	 // update author only
     @PutMapping("/water/order/{orderId}")
@@ -81,6 +73,7 @@ public class WaterOrderResource {
                 		throw new WaterOrderException("Cancellation is not possible. Order is already delivered. ");
                 	}else {
                 		x.setOrderStatus(OrderStatus.DELIVERED.toString());
+                		LOGGER.info("Cancelling the order :"+orderId);
                 		 return waterOrderRepository.save(x);
                 	}
 
@@ -94,9 +87,9 @@ public class WaterOrderResource {
 	
 		
 	@PostMapping("/water/orders")
-	public WaterOrder createTodo(@Valid @RequestBody WaterOrder waterOrder){
+	public WaterOrder createWaterOder(@Valid @RequestBody WaterOrder waterOrder){
 		
-	
+		LOGGER.info("Create water order");
 		return waterOrderRepository.save(waterOrder);
 		
 		
