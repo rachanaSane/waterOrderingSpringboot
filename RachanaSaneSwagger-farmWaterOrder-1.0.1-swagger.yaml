@@ -132,10 +132,10 @@ definitions:
       startDateTime:
         type: string
         format: date-time
-        example: doggie
+        example: provide date time in format yyyy-mm-dd hh:mm:ss
       duration:
         type: string
-        example: doggie  
+        example: provide duration in format hh:mm:ss  
       orderStatusDescription:
         type: string
         enum:

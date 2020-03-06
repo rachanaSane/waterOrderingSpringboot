@@ -32,6 +32,8 @@ Technologies used
 - h2 database
 - spring integration
 
+https://app.swaggerhub.com/apis/RachanaSaneSwagger/farmWaterOrder/1.0.1
+
 Create waterOrder
 
 http://localhost:8080/water/order
