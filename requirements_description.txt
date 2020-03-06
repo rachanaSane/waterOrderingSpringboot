@@ -1,0 +1,58 @@
+The aim of this exercise is to implement a water ordering API so farmers can request water to irrigate their farms. Farmers can use this API to place water orders, view existing water orders and cancel water orders before they are delivered.
+A basic water order has the following attributes:
+• farmId – A unique ID for identifying a farm.
+• Start date time – The date and time when water should be delivered.
+• Duration – The duration of the order (e.g. Duration of 3 hours means water will flow into the farm for 3 hours from the start date time).
+As part of this exercise, you will need to:
+1. Design and implement a REST API to accept new orders from a farmer.
+2. Design and implement an API for cancelling an existing order if it hasn’t been delivered.
+3. Design and implement an API so farmers can query existing orders. When querying orders, the farmer should be able to see the status of each order. Possible status of a water order:
+• Requested – “Order has been placed but not yet delivered.”
+• InProgress – “Order is being delivered right now.”
+• Delivered – “Order has been delivered.”
+• Cancelled – “Order was cancelled before delivery.”
+4. The API must ensure the water orders for a farm do not overlap.
+• For example, if Farm X already has an order for 30 Jan 2019 starting at 6am with a 3 hours duration, it should not allow Farm X to place an order starting at 8am on the same day.
+5. To simulate water delivery, your application should output a line each time the status of a water order changes. This include –
+• When a new water order is placed;
+• When a water order starts (Start date time of the order);
+• When a water order is delivered (i.e. start date time + duration);
+• When a water order is cancelled;
+• As an example:
+i. Assume it is currently 10am, and a water order is created with a start time of 12pm and finishing at 2pm.
+ii. At 10am, when the order is placed, your application’s log should print “New water order for farm xyz created”
+iii. At 12pm, log should print “Water delivery to farm xyz started.”
+iv. At 2pm, log should print “Water delivery to farm xyz stopped.”
+6. For the purpose of this exercise, you can assume orders are stored in memory. Orders do not need to persist between application restarts
+
+
+Technologies used
+
+- Springboot
+- h2 database
+- spring integration
+
+Create waterOrder
+
+http://localhost:8080/water/order
+
+request body:
+{
+   "farmName"  : "rachanas3",
+  "startDateTime"  : "2020-03-07 17:58:00",
+  "duration" : "00:02:00"
+}
+
+Get all the water orders
+
+http://localhost:8080/water/orders
+
+Get WaterOrder by id
+
+http://localhost:8080/water/order/1
+
+Cancel water order
+http://localhost:8080/water/order/100002003
+
+Access in memory h2 database using
+http://localhost:8080/h2-console

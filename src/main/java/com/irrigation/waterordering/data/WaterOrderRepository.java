@@ -16,9 +16,7 @@ import com.irrigation.waterordering.model.WaterOrder;
 @Repository
 public interface WaterOrderRepository extends JpaRepository<WaterOrder, Long> {
 	
-	//@Query("SELECT order FROM WaterOrder order WHERE order.orderStatus not in('DELIVERED','CANCELLED') AND (:newStartDate <= order.endDateTime AND :newEndDate >= order.startDateTime)")
-	//@Query("SELECT order FROM WaterOrder order WHERE order.orderStatus not in('DELIVERED','CANCELLED')")
-	//@Query("SELECT order FROM WaterOrder order WHERE order.endDateTime >= :newStartDate AND order.startDateTime <= :newEndDate")
+	
 	@Query("SELECT order FROM WaterOrder order WHERE order.orderStatus not in('DELIVERED','CANCELLED') AND order.endDateTime >= :newStartDate AND order.startDateTime <= :newEndDate")
 	Collection<WaterOrder> findAllOverlappedWaterOrders(@Param("newStartDate") LocalDateTime startDate, @Param("newEndDate") LocalDateTime endDate );
 

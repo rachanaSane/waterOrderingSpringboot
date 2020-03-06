@@ -1,37 +1,27 @@
 package com.irrigation.waterordering.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Future;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.irrigation.waterordering.validator.ValueOfEnum;
-
 @Entity
 public class WaterOrder {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private String farmName;
-	
-	@Future
-	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime startDateTime;	
-	
-	
+
+	private LocalDateTime startDateTime;
+
 	private LocalDateTime endDateTime;
-	
-	
+
 	private long duration;
-	
-	//@ValueOfEnum(enumClass = OrderStatus.class , message="valid value should be out of REQUESTED| INPROGRESS| DELIVERED |CANCELLED")
+
 	private String orderStatus;
 
 	public Long getId() {
@@ -41,8 +31,6 @@ public class WaterOrder {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
 
 	public String getFarmName() {
 		return farmName;
@@ -60,7 +48,6 @@ public class WaterOrder {
 		this.startDateTime = startDateTime;
 	}
 
-	
 	public long getDuration() {
 		return duration;
 	}
@@ -109,15 +96,5 @@ public class WaterOrder {
 	public void setEndDateTime(LocalDateTime endDateTime) {
 		this.endDateTime = endDateTime;
 	}
-
-	
-
-	
-	
-	
-	
-	
-	
-	
 
 }

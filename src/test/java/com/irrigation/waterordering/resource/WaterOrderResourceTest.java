@@ -53,7 +53,7 @@ public class WaterOrderResourceTest {
     @Order(2)
     public void testCreateWaterOrder() throws URISyntaxException 
     {
-        final String baseUrl = "http://localhost:"+ port+"/water/orders";
+        final String baseUrl = "http://localhost:"+ port+"/water/order";
         URI uri = new URI(baseUrl);
         WaterOrderDto dto = new WaterOrderDto();
         dto.setFarmName("rachFarm");
